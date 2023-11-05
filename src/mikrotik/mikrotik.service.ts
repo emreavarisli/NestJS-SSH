@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 const { Routeros } = require("routeros-node");
+import { User } from './mikrotik.entity';
+
+
 @Injectable()
 export class MikrotikService {
     async getFilterRules() {
@@ -22,6 +25,7 @@ export class MikrotikService {
                 routeros.destroy();
             });
 
-        return data[0];
+
+        return data;
     }
 }
