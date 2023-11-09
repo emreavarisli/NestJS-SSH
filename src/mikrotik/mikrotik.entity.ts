@@ -1,15 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
-@Entity()
-export class User {
+@Entity('mikrotik')
+export class Mikrotik extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    chain: number;
+    chain: string;
 
     @Column()
-    action: number;
+    action: string;
 
     @Column()
     bytes: string;

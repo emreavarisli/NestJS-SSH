@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
 const { Routeros } = require("routeros-node");
-import { User } from './mikrotik.entity';
+import { Mikrotik } from './mikrotik.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 
 @Injectable()
 export class MikrotikService {
+    constructor(
+        @InjectRepository(Mikrotik)
+        private readonly mikrotikRepository: Repository<Mikrotik>
+    ) { }
     async getFilterRules() {
         const routeros = new Routeros({
             host: "192.168.88.1",
@@ -25,7 +31,8 @@ export class MikrotikService {
                 routeros.destroy();
             });
 
+        const value = await this.mikrotikRepository.find();
 
-        return data;
+        return data[0];
     }
 }
