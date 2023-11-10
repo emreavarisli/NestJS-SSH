@@ -30,11 +30,52 @@ export class MikrotikService {
             const mikrotikWithIdOne = value.find(mikrotik => mikrotik.id === 1);
             console.log(mikrotikWithIdOne);
 
-            if (mikrotikWithIdOne && mikrotikWithIdOne.chain === data[0].chain) {
-                console.log('Değerler eşit.');
+            // if (mikrotikWithIdOne && mikrotikWithIdOne.chain === data[0].chain) {
+            //     console.log('Değerler eşit.');
+            // } else {
+            //     console.log('Değerler eşit değil.');
+            // }
+
+            if (mikrotikWithIdOne) {
+                if (mikrotikWithIdOne.chain === data[0].chain) {
+                    console.log('chain değerleri eşit.');
+                } else {
+                    console.log('chain değerleri eşit değil.');
+                }
+
+                if (mikrotikWithIdOne.action === data[0].action) {
+                    console.log('action değerleri eşit.');
+                } else {
+                    console.log('action değerleri eşit değil.');
+                }
+
+                if (mikrotikWithIdOne.bytes === data[0].bytes) {
+                    console.log('bytes değerleri eşit.');
+                } else {
+                    console.log('bytes değerleri eşit değil.');
+                }
+
+                if (mikrotikWithIdOne.packets === data[0].packets) {
+                    console.log('packets değerleri eşit.');
+                } else {
+                    console.log('packets değerleri eşit değil.');
+                }
+
+                if (mikrotikWithIdOne.dynamic === data[0].dynamic) {
+                    console.log('dynamic değerleri eşit.');
+                } else {
+                    console.log('dynamic değerleri eşit değil.');
+                }
+
+                if (mikrotikWithIdOne.comment === data[0].comment) {
+                    console.log('comment değerleri eşit.');
+                } else {
+                    console.log('comment değerleri eşit değil.');
+                }
             } else {
-                console.log('Değerler eşit değil.');
+                console.log('Mikrotik verisi bulunamadı.');
             }
+
 
             return data;
         } catch (error) {
