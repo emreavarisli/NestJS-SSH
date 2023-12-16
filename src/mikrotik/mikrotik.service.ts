@@ -27,56 +27,33 @@ export class MikrotikService {
 
             const value = await this.mikrotikRepository.find();
 
-            const mikrotikWithIdOne = value.find(mikrotik => mikrotik.id === 1);
-            console.log(mikrotikWithIdOne);
 
-            // if (mikrotikWithIdOne && mikrotikWithIdOne.chain === data[0].chain) {
-            //     console.log('Değerler eşit.');
-            // } else {
-            //     console.log('Değerler eşit değil.');
-            // }
+            const mikrotikIndex = value.findIndex(mikrotik => mikrotik.id === 1);
 
-            if (mikrotikWithIdOne) {
-                if (mikrotikWithIdOne.chain === data[0].chain) {
-                    console.log('chain değerleri eşit.');
-                } else {
-                    console.log('chain değerleri eşit değil.');
-                }
+            if (mikrotikIndex !== -1) {
+                const mikrotikWithIdOne = value[mikrotikIndex];
+                const fieldsToCheck = ['chain', 'action', 'bytes', 'packets', 'dynamic', 'comment'];
+                fieldsToCheck.forEach(field => {
+                    if (mikrotikWithIdOne[field] !== data[mikrotikIndex][field]) {
 
-                if (mikrotikWithIdOne.action === data[0].action) {
-                    console.log('action değerleri eşit.');
-                } else {
-                    console.log('action değerleri eşit değil.');
-                }
+                        if (mikrotikWithIdOne[field] !== Boolean(data[mikrotikIndex][field])) {
 
-                if (mikrotikWithIdOne.bytes === data[0].bytes) {
-                    console.log('bytes değerleri eşit.');
-                } else {
-                    console.log('bytes değerleri eşit değil.');
-                }
+                            console.log(`${field} değerleri eşit değil.${mikrotikWithIdOne[field]}`);
+                            console.log(`${field} değerleri eşit değil.${data[mikrotikIndex][field]}`);
+                            mikrotikWithIdOne[field] = data[mikrotikIndex][field];
+                            data[mikrotikIndex].ischanged = 1;
 
-                if (mikrotikWithIdOne.packets === data[0].packets) {
-                    console.log('packets değerleri eşit.');
-                } else {
-                    console.log('packets değerleri eşit değil.');
-                }
 
-                if (mikrotikWithIdOne.dynamic === data[0].dynamic) {
-                    console.log('dynamic değerleri eşit.');
-                } else {
-                    console.log('dynamic değerleri eşit değil.');
-                }
+                        }
 
-                if (mikrotikWithIdOne.comment === data[0].comment) {
-                    console.log('comment değerleri eşit.');
-                } else {
-                    console.log('comment değerleri eşit değil.');
-                }
+                    } else {
+                        console.log(`${field} değerleri eşit.`);
+                    }
+                });
+
             } else {
                 console.log('Mikrotik verisi bulunamadı.');
             }
-
-
             return data;
         } catch (error) {
             console.error(error);
